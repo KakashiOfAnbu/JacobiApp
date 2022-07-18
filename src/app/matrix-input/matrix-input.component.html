@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmitMatrix(form.value.matrix)"
+  class="w-full flex items-center justify-center flex-col ">
+  <hr>
+  <div formArrayName="matrix"
+    class=" border-2 mb-6 mt-8 border-black  px-8 relative before:content-[''] before:absolute before:bg-[#eeeff0]  before:-top-6 before:h-8 before:left-4 before:right-4 after:content-[''] after:absolute after:bg-[#eeeff0]  after:-bottom-6 after:h-8 after:left-4 after:right-4 ">
+    <div class="" *ngFor="let row of matrix.controls; let i = index" [formGroupName]="i">
+      <mat-form-field *ngFor="let item of sizeMatrix; let j=index" class=" mr-4 w-[80px] text-lg"
+        [ngClass]="{'-mr-1':j==sizeMatrix.length-1}">
+        <input matInput placeholder="a{{i+1}}{{j+1}}" formControlName="{{j}}">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="mb-4 text-base">
+    <mat-error *ngIf="errorMsg">
+      {{errorMsg}}
+    </mat-error>
+
+  </div>
+
+  <button mat-raised-button color="accent" class="mt-4 w-32 h-12 text-lg"
+    [disabled]="form.invalid || showResult">Magic!</button>
+</form>
+
+<app-show-result *ngIf="showResult" [result]="result"></app-show-result>

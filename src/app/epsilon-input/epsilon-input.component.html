@@ -1,0 +1,57 @@
+<div class="flex justify-center w-full">
+  <form class="mt-10 flex flex-col items-center justify-center text-xl w-[500px]" [formGroup]="myForm"
+    (ngSubmit)="handleSubmitEpsilon(myForm.value,$event.submitter.id)">
+    <mat-form-field disabled="!epsilonStatus" class="example-full-width w-full" appearance="fill">
+      <mat-label>{{eLabel}}</mat-label>
+      <input matInput placeholder="Nhập số thực" formControlName="epsilon">
+      <div *ngIf="epsilon?.invalid && (epsilon?.dirty || epsilon?.touched)">
+        <mat-error *ngIf="epsilon?.errors?.['required']" class="text-sm mt-2">
+          Không có epsilon sao tính bro???
+        </mat-error>
+        <mat-error *ngIf="epsilon?.errors?.['max']" class="text-sm mt-2">
+          Epsilon gì to vậy bro???
+        </mat-error>
+        <mat-error *ngIf="epsilon?.errors?.['min']" class="text-sm mt-2">
+          Epsilon như thế là quá ít.
+        </mat-error>
+        <mat-error *ngIf="!epsilon?.errors?.['min'] && !epsilon?.errors?.['min'] && epsilon?.errors?.['pattern']"
+          class="text-sm mt-2">
+          Epsilon chuẩn chưa em?
+        </mat-error>
+
+      </div>
+    </mat-form-field>
+    <mat-form-field disabled="!epsilonStatus" class="example-full-width w-full" appearance="fill">
+      <mat-label>{{mLabel}}</mat-label>
+      <input matInput placeholder="Nhập N" formControlName="matrixSize">
+      <div *ngIf="matrixSize?.invalid && (matrixSize?.dirty || matrixSize?.touched)">
+        <mat-error *ngIf="matrixSize?.errors?.['required']" class="text-sm mt-2">
+          Không có kích cỡ sao tính bro???
+        </mat-error>
+        <mat-error *ngIf="matrixSize?.errors?.['max']" class="text-sm mt-2">
+          Kích cỡ lớn quá em không tính nổi.
+        </mat-error>
+        <mat-error *ngIf="matrixSize?.errors?.['min']" class="text-sm mt-2">
+          Như thế là quá nhỏ.
+        </mat-error>
+        <mat-error
+          *ngIf="!matrixSize?.errors?.['min'] && !matrixSize?.errors?.['min'] && matrixSize?.errors?.['pattern']"
+          class="text-sm mt-2">
+          Số chuẩn chưa em?
+        </mat-error>
+
+      </div>
+    </mat-form-field>
+    <div class="flex items-center justify-center gap-6">
+      <button id="findA1" mat-raised-button type="submit" class="w-32 h-12 text-lg"
+        [disabled]="myForm.invalid || matrixInput || matrixXInput" color="primary">Tìm A^-1</button>
+      <button id="findX" mat-raised-button type="submit" class="w-32 h-12 text-lg"
+        [disabled]="myForm.invalid || matrixInput || matrixXInput" color="primary">Tìm X</button>
+    </div>
+
+  </form>
+</div>
+<app-matrix-input *ngIf="matrixInput" [size]="matrixSize?.value" [epsilon]="epsilon?.value"></app-matrix-input>
+<app-matrix-x-input *ngIf="matrixXInput" [size]="matrixSize?.value" [epsilon]="epsilon?.value"></app-matrix-x-input>
+
+<!-- <app-matrix-input></app-matrix-input> -->
