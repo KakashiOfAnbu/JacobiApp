@@ -11,12 +11,15 @@ export class ShowResultComponent implements OnInit {
   matrixType: string;
   iteration: number;
   hesoco: number;
+  all: any[] = [];
   message: string | null = null;
   constructor() {}
 
   ngOnInit(): void {
     console.log(this.result);
     this.matrix = this.result.matrix;
+    this.all = this.result.all;
+    console.log(this.result.all);
     this.matrixType = this.result.matrixType;
     this.iteration = this.result.count;
     this.hesoco = this.result.q;

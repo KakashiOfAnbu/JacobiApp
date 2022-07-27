@@ -268,6 +268,7 @@ function findInverseMatrix(matrix, epsilon) {
   function theMagicHappenHere(matrix, epsilon) {
     if (checkDiaDom(matrix) === "row") {
       const matA = findMatrixA(matrix);
+      const all = [];
       const I = findIMatrix(matA);
       const beta = findBetaMatrix(I, matA);
       const alpha = findAlphaMatrix(matA);
@@ -279,8 +280,10 @@ function findInverseMatrix(matrix, epsilon) {
         count++;
         tempResult = JSON.parse(JSON.stringify(result));
         result = addMatrices(multiplyMatrices(alpha, tempResult), beta);
+        all.push(result);
       } while (!checkResult(q, result, tempResult, epsilon));
       return {
+        all,
         matrix: result,
         count,
         matrixType: checkDiaDom(matrix),
@@ -289,6 +292,7 @@ function findInverseMatrix(matrix, epsilon) {
     } else if (checkDiaDom(matrix) === "column") {
       const matA = findMatrixA(matrix);
       const T = findTMatrix(matA);
+      const all = [];
       const alpha = findAlphaMatrix(multiplyMatrices(T, matA));
       const I = findIMatrix(matA);
       const beta = multiplyMatrices(T, I);
@@ -305,10 +309,12 @@ function findInverseMatrix(matrix, epsilon) {
         count++;
         tempResult = JSON.parse(JSON.stringify(result));
         result = addMatrices(multiplyMatrices(alpha, tempResult), beta);
+        all.push(result);
       } while (!checkResultColumn(lambda, q, result, tempResult, epsilon));
       return {
         matrix: result,
         count,
+        all,
         matrixType: checkDiaDom(matrix),
         q,
       };

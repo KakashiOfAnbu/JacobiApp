@@ -264,6 +264,7 @@ function findX(matrix, epsilon) {
       const beta = findBetaMatrix(matrix);
       const alpha = findAlphaMatrix(matA);
       const q = findNorm("row", alpha);
+      const all = [];
       let count = 0;
       let result = [];
       for (let i = 0; i < matrix.length; i++) {
@@ -275,14 +276,17 @@ function findX(matrix, epsilon) {
         count++;
         tempResult = JSON.parse(JSON.stringify(result));
         result = addMatrices(multiplyMatrices(alpha, tempResult), beta);
+        all.push(result);
       } while (!checkResult(q, result, tempResult, epsilon));
       return {
         matrix: result,
+        all,
         count,
         matrixType: checkDiaDom(matrix),
         q,
       };
     } else if (checkDiaDom(matrix) === "column") {
+      const all = [];
       const matA = findMatrixA(matrix);
       const T = findTMatrix(matA);
       const alpha = findAlphaMatrix(multiplyMatrices(T, matA));
@@ -304,8 +308,10 @@ function findX(matrix, epsilon) {
         count++;
         tempResult = JSON.parse(JSON.stringify(result));
         result = addMatrices(multiplyMatrices(alpha, tempResult), beta);
+        all.push(result);
       } while (!checkResultColumn(lambda, q, result, tempResult, epsilon));
       return {
+        all,
         matrix: result,
         count,
         matrixType: checkDiaDom(matrix),

@@ -13,4 +13,17 @@
       </div>
     </div>
   </div>
+  <div *ngFor="let result of all; let i = index">
+    <span class="mb-6 block">Lần lặp thứ {{i+1}}:</span>
+    <div
+      class="mb-10 border-2 px-4 border-black  relative before:content-[''] before:absolute before:bg-[#eeeff0]  before:-top-6 before:h-8 before:left-4 before:right-4 after:content-[''] after:absolute after:bg-[#eeeff0]  after:-bottom-6 after:h-8 after:left-4 after:right-4 ">
+      <div class="flex flex-1 justify-items-stretch  mt-1 -mr-6 mb-1" *ngFor="let row of result; let j = index">
+        <div *ngFor="let item of result[0]; let k=index" class="flex-1 mr-6 text-lg flex align-center justify-center">
+          <span class="w-[240px] inline-block text-center">
+            {{result[j][k]}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
